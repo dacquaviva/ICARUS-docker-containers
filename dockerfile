@@ -2,6 +2,7 @@ FROM nvidia/cuda:11.5.1-cudnn8-devel-ubuntu18.04
 
 RUN apt-get update
 
+# Install opencv dependencies
 RUN apt-get install build-essential cmake git unzip pkg-config \
     libjpeg-dev libpng-dev libtiff-dev \
     libavcodec-dev libavformat-dev libswscale-dev \
@@ -19,6 +20,7 @@ RUN apt-get install build-essential cmake git unzip pkg-config \
     libhdf5-dev protobuf-compiler \
     libprotobuf-dev libgoogle-glog-dev libgflags-dev -y
 
+# Install opencv
 WORKDIR /code/libs/opencv
 
 RUN apt-get install wget -y
@@ -30,12 +32,12 @@ RUN mv opencv-4.5.5 opencv
 RUN mv opencv_contrib-4.5.5 opencv_contrib
 RUN rm opencv.zip && rm opencv_contrib.zip
 
+# Install Numpy
 WORKDIR /code/python
 RUN pip3 install --upgrade pip
 RUN pip3 install numpy==1.19.5
 
-RUN echo $(ls /usr/local/cuda*)
-
+# Build opencv
 WORKDIR /code/libs/opencv/opencv/build 
 
 RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
@@ -74,5 +76,3 @@ RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
 
 RUN make -j$(nproc)
 RUN make install
-
-RUN apt-get update
