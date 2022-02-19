@@ -1,12 +1,12 @@
-FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
+FROM nvidia/cuda:11.5.1-cudnn8-devel-ubuntu18.04
 
 RUN apt-get update
 
-RUN build-essential cmake git unzip pkg-config \
+RUN apt-get install build-essential cmake git unzip pkg-config \
     libjpeg-dev libpng-dev libtiff-dev \
     libavcodec-dev libavformat-dev libswscale-dev \
     libgtk2.0-dev libcanberra-gtk* \
-    python3-dev python3-numpy python3-pip \
+    python3-dev python3-numpy python3 python3-pip \
     libxvidcore-dev libx264-dev libgtk-3-dev \
     libtbb2 libtbb-dev libdc1394-22-dev \
     libv4l-dev v4l-utils \
@@ -17,19 +17,26 @@ RUN build-essential cmake git unzip pkg-config \
     libopenblas-dev libatlas-base-dev libblas-dev \
     liblapack-dev libeigen3-dev gfortran \
     libhdf5-dev protobuf-compiler \
-    libprotobuf-dev libgoogle-glog-dev libgflags-dev
+    libprotobuf-dev libgoogle-glog-dev libgflags-dev -y
 
 WORKDIR /code/libs/opencv
 
-RUN wget-O opencv.zip https://github.com/opencv/opencv/archive/4.5.5.zip
+RUN apt-get install wget -y
+RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/4.5.5.zip
 RUN wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.5.5.zip
 RUN unzip opencv.zip && unzip opencv_contrib.zip
 
-RUN mv opencv-4.5.1 opencv
-RUN mv opencv_contrib-4.5.1 opencv_contrib
+RUN mv opencv-4.5.5 opencv
+RUN mv opencv_contrib-4.5.5 opencv_contrib
 RUN rm opencv.zip && rm opencv_contrib.zip
 
-WORKDIR /code/libs/opencv/opencv/build
+WORKDIR /code/python
+RUN pip3 install --upgrade pip
+RUN pip3 install numpy==1.19.5
+
+RUN echo $(ls /usr/local/cuda*)
+
+WORKDIR /code/libs/opencv/opencv/build 
 
 RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
@@ -63,7 +70,7 @@ RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D BUILD_opencv_python3=TRUE \
         -D OPENCV_GENERATE_PKGCONFIG=ON \
         -D BUILD_EXAMPLES=OFF \
-        -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-10.2 ..
+        -D CUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-11.5 ..
 
 RUN make -j$(nproc)
 RUN make install
