@@ -5,8 +5,8 @@ This repository contains the code that I used to create a base image containing 
 
 ### Installation
 ```
-git clone https://github.com/henk-vd-brink/docker-cuda-opencv.git
-cd docker-cuda-opencv
+git clone https://github.com/henk-vd-brink/ICARUS-docker-NVIDIA-CUDA-OpenCV.git
+cd ICARUS-docker-NVIDIA-CUDA-OpenCV
 ```
 
 ### Build
