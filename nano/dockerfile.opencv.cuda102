@@ -96,6 +96,9 @@ RUN cmake \
 	-D BUILD_PERF_TESTS=OFF \
 	-D BUILD_TESTS=OFF ..
 
-RUN make -j2
+RUN make -j4
+
 RUN make install
+
+RUN rm -rf /opt/opencv
 
