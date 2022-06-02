@@ -1,5 +1,5 @@
 ## About the Project
-This repository contains the code that I used to create a base image containing CUDA, CuDNN, and OpenCV.
+This repository contains the source code to create base images for NVIDIA Jetson Nano containing e.g., Tensorflow2, OpenCV.
 
 ## Getting Started
 
