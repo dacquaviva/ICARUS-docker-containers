@@ -4,7 +4,7 @@ This repository contains the code that I used to create a base image containing 
 ## Getting Started
 
 ## Prerequisites
-- NVIDIA Jetson
+- NVIDIA Jetson Nano
 
 ### Installation
 ```
