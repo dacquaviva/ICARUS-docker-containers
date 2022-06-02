@@ -1,5 +1,0 @@
-build-icarus-arm64v8-opencv-4.4.0_cuda102a53:
-	sudo docker build -f dockerfile.opencv.cuda102a53 -t prominendt/icarus-arm64v8-opencv-4.4.0:cuda102a53 .
-
-push-icarus-arm64v8-opencv-4.4.0_cuda102a53:
-	sudo docker push prominendt/icarus-arm64v8-opencv-4.4.0:cuda102a53
