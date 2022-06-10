@@ -11,6 +11,6 @@ cd ICARUS-docker-NVIDIA-CUDA-OpenCV
 
 ### Build
 ```
-docker build -t cuda-opencv .
+cd icarus-arm64v8-opencv-4.4.0
 ```
 
